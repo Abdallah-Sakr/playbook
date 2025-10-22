@@ -1,0 +1,8 @@
+me: Ping all hosts
+  hosts: all
+  gather_facts: no
+
+  tasks:
+    - name: Ping target machines
+      ansible.builtin.ping:
+
