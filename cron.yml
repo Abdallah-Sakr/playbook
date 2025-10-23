@@ -1,0 +1,15 @@
+--- 
+- name: deploy cronie service
+  hosts: all
+  become: yes
+  tasks: 
+    - name: install cronie 
+      ansible.builtin.yum:
+        name: cronie
+        state: present
+
+    - name: started and enabled cronie
+      ansible.builtin.service:
+        name: crond
+        state: started
+        enabled: yes
