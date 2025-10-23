@@ -1,0 +1,16 @@
+---
+- name: deploy httpd playbook
+  hosts: all
+  become: yes 
+  tasks:
+    - name: install httpd service
+      ansible.builtin.yum:
+        name: httpd
+        state: present
+
+    - name: enabled and started httpd
+      ansible.builtin.service:
+        name: httpd
+        state: started
+        enabled: yes
+         
