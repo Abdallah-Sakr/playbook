@@ -3,13 +3,15 @@
   hosts: all
   become: yes
   tasks:
-    - name: install sshd service
+    - name: install openssh-server service
       ansible.builtin.yum:
-        name: sshd
+        name: openssh-server
         state: present
 
-    - name: enabled and started sshd
+    - name: enable and start sshd service
       ansible.builtin.service:
         name: sshd
         state: started
         enabled: yes
+
+
