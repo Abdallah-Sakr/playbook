@@ -1,23 +1,29 @@
 ---
-- name: deploy httpd playbook
+- name: deploy httpd on port 8080
   hosts: all
   become: yes
-
   tasks:
     - name: install httpd service
       ansible.builtin.yum:
         name: httpd
         state: present
 
-    - name: enable and start httpd
+    - name: change httpd listen port to 8080
+      ansible.builtin.lineinfile:
+        path: /etc/httpd/conf/httpd.conf
+        regexp: '^Listen '
+        line: 'Listen 8080'
+        backup: yes
+
+    - name: enable and start httpd service
       ansible.builtin.service:
         name: httpd
         state: started
         enabled: yes
 
-    - name: enable http service on firewalld
+    - name: open port 8080 in firewalld
       ansible.posix.firewalld:
-        service: http
-        permanent: true
-        immediate: true
+        port: 8080/tcp
+        permanent: yes
+        immediate: yes
         state: enabled
