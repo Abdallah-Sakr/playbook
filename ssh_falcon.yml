@@ -1,0 +1,15 @@
+---
+- name: deploy sshd playbook
+  hosts: all
+  become: yes
+  tasks:
+    - name: install sshd service
+      ansible.builtin.yum:
+        name: sshd
+        state: present
+
+    - name: enabled and started sshd
+      ansible.builtin.service:
+        name: sshd
+        state: started
+        enabled: yes
